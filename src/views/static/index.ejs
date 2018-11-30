@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <% include ./partials/head.ejs %>
+  </head>
+  <body>
+    <% include ./partials/navbar.ejs %>
+      <main class="container">
+        <% include ../static/partials/messages.ejs %> 
+        
+        <header class="jumbotron my-4">
+          <h1 class="display-3">Welcome to Blocipedia</h1>
+          <p class="lead">Create, share, and collaborate with wiki pages</p>
+          <a href="/users/sign_up" class="btn btn-primary btn-lg">Sign up</a>
+        </header>
+
+        <section class="row text-center">
+          <section class="col-lg-6">
+            <h4 class="card-title">Free Plan</h4>
+            <p class="card-text">Create as many public Wikis as you want!</p>
+          </section>
+
+          <section class="col-lg-6">
+            <h4 class="card-title">Premium Plan</h4>
+            <p class="card-text">Create private wikis!</p>
+          </section>
+
+        </section>
+      </main>
+      <% include ./partials/baseScripts.ejs %>
+    </body>
+</html>
