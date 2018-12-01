@@ -27,6 +27,7 @@ module.exports = (sequelize, DataTypes) => {
   }, {});
   User.associate = function(models) {
     // associations can be defined here
+
     User.afterCreate( (user, callback) => {
       const msg = {
         to: user.email,
@@ -34,6 +35,9 @@ module.exports = (sequelize, DataTypes) => {
         subject: "Welcome to Blocipedia!",
         text: `Hello, ${user.name}.\n\nThanks for signing up!`
       };
+      if (process.env.NODE_ENV === "test") {
+        msg["to"] = process.env.PERSONAL_EMAIL;
+      }
       return sgMail.send(msg);
     });
   };

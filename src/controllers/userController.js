@@ -1,5 +1,5 @@
 const userQueries = require("../db/queries.users.js");
-// const passport = require("passport");
+const passport = require("passport");
 
 module.exports = {
   signUp(req, res, next) {
@@ -20,5 +20,28 @@ module.exports = {
         res.redirect("/");
       }
     });
+  },
+  signInForm(req, res, next) {
+    res.render("users/sign_in");
+  },
+  signIn(req, res, next) {
+    passport.authenticate("local", function(err, user, info) {
+      if (err) { return next(err); }
+      if (!user) {
+        req.flash("notice", "Sign in failed. Please try again.");
+        return res.redirect("/users/sign_in");
+      } else {
+        req.logIn(user, function(err) {
+          if (err) { return next(err); }
+          req.flash("notice", "You've successfully signed in!");
+          return res.redirect("/");
+        });
+      }
+    })(req, res, next);
+  },
+  signOut(req, res, next) {
+    req.logOut();
+    req.flash("notice", "You've successfully signed out!");
+    res.redirect("/");
   }
 }
