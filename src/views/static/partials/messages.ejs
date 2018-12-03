@@ -8,7 +8,11 @@
       Validation errors:
       <ul>
         <% messages.error.forEach((err) => { %>
-          <li><%= `${err.param} ${err.msg}` %></li>
+          <% if ( err.name === "SequelizeUniqueConstraintError" ) { %>
+            <li><%= err.original.detail %></li>
+          <% } else { %>
+            <li><%= `${err.param} ${err.msg}` %></li>
+          <% } %>
         <% }) %>
       </ul>
     <% } else { %>
