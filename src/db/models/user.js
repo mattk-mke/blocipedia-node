@@ -32,16 +32,21 @@ module.exports = (sequelize, DataTypes) => {
   User.associate = function(models) {
     // associations can be defined here
 
+    User.hasMany(models.Wiki, {
+      foreignKey: "userId",
+      as: "wikis"
+    });
+
     User.afterCreate( (user, callback) => {
+      if (process.env.NODE_ENV === "test") {
+        return console.log("Emails not sent during tests");
+      }
       const msg = {
         to: user.email,
         from: "noreply@blocipedia.org",
         subject: "Welcome to Blocipedia!",
         text: `Hello, ${user.name}.\n\nThanks for signing up!`
       };
-      if (process.env.NODE_ENV === "test") {
-        msg["to"] = process.env.PERSONAL_EMAIL;
-      }
       return sgMail.send(msg);
     });
   };
