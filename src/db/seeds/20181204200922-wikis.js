@@ -4,11 +4,12 @@ const faker = require("faker");
 
 let wikis = [];
 for (let i = 1; i <= 10; i++) {
+  let id = Math.floor(Math.random() * 15) + 1;
   wikis.push({
-    title: faker.hacker.noun(),
+    title: `${faker.hacker.adjective()} ${faker.hacker.noun()}`,
     body: faker.hacker.phrase(),
     private: i%2 == 0,
-    userId: 1,
+    userId: Math.floor(Math.random() * 15) + 1,
     createdAt: new Date(),
     updatedAt: new Date()
   });
@@ -38,6 +39,6 @@ module.exports = {
       return queryInterface.bulkDelete('Person', null, {});
     */
   
-    return queryInterface.bulkDelete("Wikis", null, {});
+    return queryInterface.bulkDelete("Wikis", null, {truncate: true, cascade: true, restartIdentity: true});
   }
 };
