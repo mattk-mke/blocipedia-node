@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <% include ../static/partials/head.ejs %>
+  </head>
+  <body>
+
+    <% include ../static/partials/navbar.ejs %>
+
+    <main class="container">
+
+      <% include ../static/partials/messages.ejs %>
+
+      <h3>Downgrade to Standard</h3>
+      <p>Standard accounts can still create as many public wikis as needed!</p>
+
+      <form action="/users/downgrade" method="POST">
+        <div class="form-row align-items-center">
+          <div class="col-auto">
+            <input type="checkbox" class="form-check-inline" id="confirm" onchange="document.getElementById('submit').disabled = !this.checked;"/>
+            <label for="confirm" class="form-check-label">Are you sure?</label>
+          </div>
+          <div class="col-auto">
+            <input type="submit" value="Downgrade Account" class="btn btn-danger" id="submit" disabled/>
+          </div>
+        </div>
+      </form>
+    </main>
+
+    <% include ../static/partials/baseScripts.ejs %>
+
+  </body>
+</html>

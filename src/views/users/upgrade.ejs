@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <% include ../static/partials/head.ejs %>
+  </head>
+  <body>
+
+    <% include ../static/partials/navbar.ejs %>
+
+    <main class="container">
+
+      <% include ../static/partials/messages.ejs %>
+
+      <h3>Upgrade to Premium</h3>
+
+      <p>Blocipedia Premium allows you to create private wikis! Use them to collaborate privately.</p>
+      <p><strong>Subscription Price:</strong> $15.00 per year</p>
+      <form action="/users/upgrade" method="POST">
+          <script
+            src="https://checkout.stripe.com/checkout.js" class="stripe-button"
+            data-key="<%= process.env.STRIPE_PUBLISHABLE_KEY %>"
+            data-amount="1500"
+            data-name="Blocipedia"
+            data-description="Premium Account Upgrade"
+            data-image="https://stripe.com/img/documentation/checkout/marketplace.png"
+            data-locale="auto"
+            data-email="<%= currentUser.email %>">
+          </script>
+        </form>
+    </main>
+
+    <% include ../static/partials/baseScripts.ejs %>
+
+  </body>
+</html>

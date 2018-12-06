@@ -16,5 +16,21 @@ module.exports = {
     .catch( err => {
       callback(err);
     });
+  },
+  changePremiumStatus(id, stripeId, premium, callback) {
+    const status = premium ? "premium" : "standard";
+    User.findById(id)
+    .then( user => {
+      if (!user) {
+        return callback("User not found.")
+      }
+      user.update({role: status})
+      .then( user => {
+        callback(null, user);
+      })
+      .catch( err => {
+        callback(err);
+      })
+    })
   }
 }

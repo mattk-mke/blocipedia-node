@@ -27,8 +27,8 @@
             <label for="public"> Public</label>
           </div>
           <div>
-            <input type="radio" id="private" name="privacy" value="true">
-            <label for="private"> Private</label>
+            <input type="radio" id="private" name="privacy" value="true" <%= currentUser.isPremium() ? null : "disabled" %>>
+            <label for="private"> Private <%= currentUser.isPremium() ? null : "(Premium Only)" %></label>
           </div>
         </div>
         <button type="submit" class="btn btn-primary">Submit</button>

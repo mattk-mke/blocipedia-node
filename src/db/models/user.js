@@ -27,6 +27,9 @@ module.exports = (sequelize, DataTypes) => {
       type: DataTypes.STRING,
       allowNull: false,
       defaultValue: "standard"
+    },
+    stripeId: {
+      type: DataTypes.STRING
     }
   }, {});
   User.associate = function(models) {
@@ -50,5 +53,14 @@ module.exports = (sequelize, DataTypes) => {
       return sgMail.send(msg);
     });
   };
+
+  User.prototype.isAdmin = function () {
+    return this.role == "admin";
+  };
+
+  User.prototype.isPremium = function () {
+    return this.role == "admin" || this.role == "premium";
+  };
+  
   return User;
 };
