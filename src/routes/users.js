@@ -4,6 +4,7 @@ const validation = require("./validation");
 const helper = require("../auth/helpers");
 
 const userController = require("../controllers/userController")
+const wikiController = require("../controllers/wikiController")
 
 router.get("/users/sign_up", userController.signUp);
 router.post("/users/sign_up", 
@@ -16,7 +17,11 @@ router.get("/users/upgrade",
   helper.ensureAuthenticated,
   userController.premiumCheckout);
 router.post("/users/upgrade", userController.upgrade);
-router.get("/users/downgrade", userController.confirmDowngrade);
-router.post("/users/downgrade", userController.downgrade);
+router.get("/users/downgrade",
+  helper.ensureAuthenticated,
+  userController.confirmDowngrade);
+router.post("/users/downgrade",
+  wikiController.publicize,
+  userController.downgrade);
 
 module.exports = router;

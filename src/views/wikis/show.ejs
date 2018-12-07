@@ -9,7 +9,7 @@
     <main class="container">
       <% include ../static/partials/messages.ejs %>
       <div style="display: flex; align-items:center;">
-        <h1><%= wiki.title %></h1>
+        <h1><%= wiki.title %> <small class="text-muted"><%= wiki.private ? "(Private)" : "(Public)" %></small></h1>
       </div>
       <% if (currentUser) { %>
         <a href="/wikis/<%= wiki.id %>/edit" class="btn btn-warning">Edit</a>

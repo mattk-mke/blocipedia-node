@@ -26,8 +26,8 @@
             <label for="public">Public</label>
           </div>
           <div>
-            <input type="radio" id="private" name="privacy" value="true" <%= wiki.private ? "checked" : null %>>
-            <label for="private">Private</label>
+            <input type="radio" id="private" name="privacy" value="true" <%= wiki.private ? "checked" : null %> <%= currentUser.isPremium() ? null : "disabled" %>>
+            <label for="private">Private <small class="text-muted"><%= currentUser.isPremium() ? null : "(Premium Only)" %></small></label>
           </div>
         </div>
         <button type="submit" class="btn btn-primary">Update</button>

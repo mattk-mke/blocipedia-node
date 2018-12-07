@@ -108,11 +108,15 @@ module.exports = {
             req.flash("notice", err);
             res.redirect("/users/upgrade");
           } else {
-            req.flash("notice", "You've successfully downgraded to a Standard account!");
+            req.flash("notice", "\nYou've successfully downgraded to a Standard account!");
             res.redirect("/");
           }
         });
       })
+    })
+    .catch( err => {
+      req.flash("notice", err);
+      next();
     })
   }
 }
