@@ -56,6 +56,7 @@ module.exports = {
     return Wiki.findById(req.params.id)
     .then( wiki => {
       if (!wiki) {
+        console.log("Wiki not found!")
         return callback("Wiki not found");
       }
       const authorized = new Authorizer(req.user, wiki).update();
