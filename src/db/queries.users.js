@@ -24,7 +24,7 @@ module.exports = {
       if (!user) {
         return callback("User not found.")
       }
-      user.update({role: status})
+      user.update({role: status, stripeId: stripeId})
       .then( user => {
         callback(null, user);
       })
