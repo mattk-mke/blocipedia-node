@@ -40,6 +40,13 @@ module.exports = (sequelize, DataTypes) => {
       as: "wikis"
     });
 
+    User.belongsToMany(models.Wiki, {
+      as: "PrivateWikis",
+      through: "collaborations",
+      foreignKey: "userId",
+      otherKey: "wikiId"
+    })
+
     User.afterCreate( (user, callback) => {
       if (process.env.NODE_ENV === "test") {
         return console.log("Emails not sent during tests");

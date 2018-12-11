@@ -10,9 +10,40 @@
       <h1>Wikis</h1>
       <% if(currentUser) { %>
         <a href="/wikis/new" class="btn btn-success">New Wiki</a>
+      <% }
+      if (privateWikis) { %>
+        <h4>Private:</h4>
+        <ul class="list-group">
+          <% privateWikis.sort( (a, b) => {
+            let titleA = a.title.toUpperCase();
+            let titleB = b.title.toUpperCase();
+            if (titleA < titleB) {
+              return -1;
+            }
+            if (titleA > titleB) {
+              return 1;
+            }
+            return 0;
+          }).forEach( wiki => { %>
+            <li class="list-group-item">
+              <a href="/wikis/<%= wiki.id %>"> <%= wiki.title %> </a>
+            </li>
+          <% }) %>
+        </ul>
       <% } %>
+      <h4>Public:</h4>
       <ul class="list-group">
-        <% wikis.forEach((wiki) => { %>
+        <% wikis.sort( (a, b) => {
+          let titleA = a.title.toUpperCase();
+          let titleB = b.title.toUpperCase();
+          if (titleA < titleB) {
+            return -1;
+          }
+          if (titleA > titleB) {
+            return 1;
+          }
+          return 0;
+        }).forEach( wiki => { %>
           <li class="list-group-item">
             <a href="/wikis/<%= wiki.id %>"> <%= wiki.title %> </a>
           </li>

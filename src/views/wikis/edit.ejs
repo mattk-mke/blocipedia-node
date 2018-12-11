@@ -28,6 +28,34 @@
               <label for="private">Private <small class="text-muted"><%= currentUser.isPremium() ? null : "(Premium Only)" %></small></label>
             </div>
           </div>
+          <% if (wiki.private) { %>
+            <div class="col-lg-3">
+              <p>Collaborators:</p>
+              <div class="form-group collaborators">
+                <% users.sort( (a, b) => {
+                  let nameA = a.name.toUpperCase();
+                  let nameB = b.name.toUpperCase();
+                  if (nameA < nameB) {
+                    return -1;
+                  }
+                  if (nameA > nameB) {
+                    return 1;
+                  }
+                  return 0;
+                }).forEach( user => { %>
+                  <div class="custom-control custom-checkbox">
+                    <input type="checkbox" class="custom-control-input" id="check-<%= user.id %>" value="<%= user.id %>" name="collaborators"
+                      <% collaborators.forEach( collaborator => {
+                        if (collaborator.id == user.id) { %>
+                          checked
+                        <% }
+                      }) %> >
+                    <label class="custom-control-label" for="check-<%= user.id %>"><%= user.name %></label>
+                  </div>
+                <% }) %>
+              </div>
+            </div>
+          <% } %>
         </div>
         <div class="form-row">
             <div class="form-group col-lg-6">

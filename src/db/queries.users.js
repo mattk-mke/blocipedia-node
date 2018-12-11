@@ -32,5 +32,23 @@ module.exports = {
         callback(err);
       })
     })
+  },
+  getAllUsers(callback) {
+    User.all()
+    .then( users => {
+      callback(null, users)
+    })
+    .catch( err => {
+      callback(err);
+    })
+  },
+  getAllPrivateWikis(user, callback) {
+    user.getPrivateWikis()
+    .then( privateWikis => {
+      callback(null, privateWikis);
+    })
+    .catch( err => {
+      callback(err)
+    });
   }
 }

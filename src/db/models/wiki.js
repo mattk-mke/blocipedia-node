@@ -25,6 +25,31 @@ module.exports = (sequelize, DataTypes) => {
       foreignKey: "userId",
       onDelete: "CASCADE"
     });
+
+    Wiki.belongsToMany(models.User, {
+      as: "Collaborators",
+      through: "collaborations",
+      foreignKey: "wikiId",
+      otherKey: "userId"
+    });
+    
   };
+
+  Wiki.prototype.isCollaborator = function(userId) {
+    return this.getCollaborators()
+    .then( collaborators => {
+      collaborators.forEach( collaborator => {
+        if (collaborator.id == userId) {
+          return true;
+        }
+      });
+      return false;
+    })
+    .catch(err => {
+      console.log(err);
+      return false;
+    });
+  };
+
   return Wiki;
 };

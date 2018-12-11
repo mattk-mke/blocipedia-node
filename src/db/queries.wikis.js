@@ -1,16 +1,40 @@
 const Wiki = require("./models").Wiki;
+const User = require("./models").User;
 const Authorizer = require("../policies/wiki");
 
 module.exports = {
-  getAllWikis(isPremium, callback) {
-    return Wiki.all(
-      isPremium ? {} : {
+  getAllWikis(user, callback) {
+    return Wiki.all({
       where: {
         private: false
       }
     })
     .then( wikis => {
-      callback(null, wikis);
+      if (user) {
+        if(user.isAdmin()) {
+          Wiki.all({
+            where: {
+              private: true
+            }
+          })
+          .then( privateWikis =>{
+            callback(null, wikis, privateWikis);
+          })
+          .catch( err => {
+            callback(err);
+          });
+        } else {
+          user.getPrivateWikis()
+          .then( privateWikis => {
+            callback(null, wikis, privateWikis);
+          })
+          .catch( err => {
+            callback(err);
+          })
+        }
+      } else {
+        callback(null, wikis, null);
+      }
     })
     .catch( err => {
       callback(err);
@@ -19,16 +43,29 @@ module.exports = {
   addWiki(newWiki, callback) {
     return Wiki.create(newWiki)
     .then( wiki => {
-      callback(null, wiki);
+      wiki.setCollaborators([wiki.userId])
+      .then( collaborators => {
+        callback(null, wiki);
+      })
+      .catch( err => {
+        callback(err);
+      });
     })
     .catch( err => {
+      console.log(err);
       callback(err);
     });
   },
   getWiki(id, callback) {
     return Wiki.findById(id)
     .then( wiki => {
-      callback(null, wiki);
+      wiki.getCollaborators()
+      .then( collaborators => {
+        callback(null, wiki, collaborators);
+      })
+      .catch( err => {
+        callback(err);
+      });
     })
     .catch( err => {
       callback(err);
@@ -56,32 +93,35 @@ module.exports = {
     return Wiki.findById(req.params.id)
     .then( wiki => {
       if (!wiki) {
-        console.log("Wiki not found!")
         return callback("Wiki not found");
       }
       const authorized = new Authorizer(req.user, wiki).update();
       if (authorized) {
+        
         wiki.update(updatedWiki, {
           fields: Object.keys(updatedWiki)
         })
         .then( () => {
-          callback(null, wiki);
+          wiki.setCollaborators(req.body.collaborators ? req.body.collaborators : null)
+          .then( () => {
+            callback(null, wiki);
+          })
+          .catch( err => {
+            console.log(err);
+            callback(err);
+          });
         })
-        .catch( err => {
-          callback(err);
-        });
       }
     });
   },
   publicizeUserWikis(id, callback) {
-    return Wiki.update({ private: false }, {
+    return Wiki.update({ private: false, collaborators: null}, {
       where: {
         userId: id,
         private: true
       }
     })
     .then( wikisCount => {
-      console.log(wikisCount);
       callback(null, wikisCount[0]);
     })
     .catch( err => {

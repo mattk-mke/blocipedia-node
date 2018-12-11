@@ -1,20 +1,15 @@
 const wikiQueries = require("../db/queries.wikis.js");
+const userQueries = require("../db/queries.users.js");
 const Authorizer = require("../policies/wiki");
 const markdown = require("markdown").markdown;
 
 module.exports = {
   index(req, res, next) {
-    let isPremium;
-    if(req.user) {
-      isPremium = req.user.isPremium();
-    } else {
-      isPremium = false;
-    }
-    wikiQueries.getAllWikis(isPremium, (err, wikis) => {
+    wikiQueries.getAllWikis(req.user ? req.user : null, (err, wikis, privateWikis) => {
       if (err) {
         res.redirect(500, "static/index");
       } else {
-        res.render("wikis/index", {wikis});
+        res.render("wikis/index", {wikis, privateWikis});
       }
     });
   },
@@ -74,17 +69,24 @@ module.exports = {
     });
   },
   edit(req, res, next){
-    wikiQueries.getWiki(req.params.id, (err, wiki) => {
-      if (err || wiki == null) {
-        res.redirect(404, "/wikis/");
+    userQueries.getAllUsers( (err, users) => {
+      if (err) {
+        req.flash(err);
+        res.redirect("/wikis/")
       } else {
-        const authorized = new Authorizer(req.user, wiki).edit();
-        if (authorized) {
-          res.render("wikis/edit", {wiki});
-        } else {
-          req.flash("notice", "You are not authorized to do that.");
-          res.redirect(`/wikis/${req.params.id}`);
-        }
+        wikiQueries.getWiki(req.params.id, (err, wiki, collaborators) => {
+          if (err || wiki == null) {
+            res.redirect(404, "/wikis/");
+          } else {
+            const authorized = new Authorizer(req.user, wiki).edit();
+            if (authorized) {
+              res.render("wikis/edit", {wiki, users, collaborators});
+            } else {
+              req.flash("notice", "You are not authorized to do that.");
+              res.redirect(`/wikis/${req.params.id}`);
+            }
+          }
+        });
       }
     });
   },
@@ -93,7 +95,7 @@ module.exports = {
       title: req.body.title,
       body: req.body.body,
       private: req.user.isPremium() ? req.body.privacy == "true" : false,
-      userId: req.user.id
+      userId: req.user.id,
     };
     wikiQueries.updateWiki(req, updatedWiki, (err, wiki) => {
       if (err || wiki == null) {
