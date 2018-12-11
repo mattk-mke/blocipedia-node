@@ -26,7 +26,11 @@ module.exports = {
         } else {
           user.getPrivateWikis()
           .then( privateWikis => {
-            callback(null, wikis, privateWikis);
+            if (privateWikis.length == 0) {
+              callback(null, wikis, null);
+            } else {
+              callback(null, wikis, privateWikis);
+            }
           })
           .catch( err => {
             callback(err);
