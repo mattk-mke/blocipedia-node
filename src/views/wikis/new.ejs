@@ -24,7 +24,7 @@
             </div>
             <div>
               <input type="radio" id="private" name="privacy" value="true" <%= currentUser.isPremium() ? null : "disabled" %>>
-              <label for="private"> Private <small class="text-muted"><%= currentUser.isPremium() ? null : "(Premium Only)" %></small></label>
+              <label for="private"> Private <%- currentUser.isPremium() ? null : '<span class="badge badge-primary">Premium</span>' %></label>
             </div>
           </div>
         </div>

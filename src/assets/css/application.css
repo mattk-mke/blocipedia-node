@@ -1,8 +1,18 @@
 body {
   padding-top: 64px;
+  margin-bottom: 20px;
+}
+
+nav {
+  background-color: #3E333B;
 }
 
 .collaborators {
   height: 200px;
   overflow: scroll;
+}
+
+#preview {
+  min-height: 210px;
+  margin-top: 0;
 }

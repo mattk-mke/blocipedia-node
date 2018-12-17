@@ -2,6 +2,7 @@
 <html lang="en">
   <head>
     <% include ./partials/head.ejs %>
+    <link rel="stylesheet" href="/css/index.css">
   </head>
   <body>
     <% include ./partials/navbar.ejs %>
@@ -9,15 +10,20 @@
         <% include ../static/partials/messages.ejs %> 
         
         <header class="jumbotron my-4">
-          <h1 class="display-3">Welcome to Blocipedia</h1>
-          <p class="lead">Create, share, and collaborate with wiki pages</p>
+          <div class="splash-text">
+            <h1 class="display-3">Welcome to Barkipedia</h1>
+            <p class="lead">Create, share, and collaborate with canine wiki pages</p>
+            <% if (currentUser) { %>
+              <a href="/wikis"><button type="button" class="btn btn-lg btn-primary">Explore!</button></a>
+            <% } %>
+          </div>
         </header>
 
         <div class="card-deck mb-3 text-center">
             <% if (!currentUser) { %>
             <div class="card mb-4 shadow-sm">
               <div class="card-header">
-                <h4 class="my-0 font-weight-normal">Free Plan</h4>
+                <h4 class="my-0 font-weight-normal">Standard</h4>
               </div>
               <div class="card-body">
                 <h1 class="card-title pricing-card-title">$0 <small class="text-muted">/ yr</small></h1>
@@ -32,7 +38,7 @@
             <% if (!currentUser || !currentUser.isPremium()) { %>
             <div class="card mb-4 shadow-sm">
               <div class="card-header">
-                <h4 class="my-0 font-weight-normal">Premium Plan</h4>
+                <h4 class="my-0 font-weight-normal">Premium</h4>
               </div>
               <div class="card-body">
                 <h1 class="card-title pricing-card-title">$15 <small class="text-muted">/ yr</small></h1>

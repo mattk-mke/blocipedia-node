@@ -1,0 +1,12 @@
+@import "../../../node_modules/bootstrap/scss/functions"; 
+@import "../../../node_modules/bootstrap/scss/variables";
+@import url('https://fonts.googleapis.com/css?family=Varela+Round');
+
+$theme-colors: (
+  "primary": #946CA4,
+  "secondary": #35242E,
+);
+
+$font-family-base: 'Varela Round', sans-serif;
+
+@import "../../../node_modules/bootstrap/scss/bootstrap";

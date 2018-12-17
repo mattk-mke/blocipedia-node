@@ -10,23 +10,38 @@
     <main class="container">
 
       <% include ../static/partials/messages.ejs %>
+      <link rel="stylesheet" href="/css/upgrade.css">
 
-      <h3>Upgrade to Premium</h3>
-
-      <p>Blocipedia Premium allows you to create private wikis! Use them to collaborate privately.</p>
-      <p><strong>Subscription Price:</strong> $15.00 per year</p>
-      <form action="/users/upgrade" method="POST">
-          <script
-            src="https://checkout.stripe.com/checkout.js" class="stripe-button"
-            data-key="<%= process.env.STRIPE_PUBLISHABLE_KEY %>"
-            data-amount="1500"
-            data-name="Blocipedia"
-            data-description="Premium Account Upgrade"
-            data-image="https://stripe.com/img/documentation/checkout/marketplace.png"
-            data-locale="auto"
-            data-email="<%= currentUser.email %>">
-          </script>
-        </form>
+      <div class="card mb-4 shadow-sm">
+          <div class="card-header">
+            <h4 class="my-0 font-weight-normal display-4">Upgrade to Premium</h4>
+          </div>
+          <div class="card-body">
+            <h1 class="card-title pricing-card-title">$15 <small class="text-muted">/ yr</small></h1>
+            <ul class="list-unstyled mt-3 mb-4">
+              <li>Create private wikis</li>
+              <li>Add/remove collaborators to private wikis</li>
+            </ul>
+          </div>
+          <form action="/users/upgrade" method="POST">
+              <script
+                src="https://checkout.stripe.com/checkout.js"
+                class="stripe-button"
+                data-key="<%= process.env.STRIPE_PUBLISHABLE_KEY %>"
+                data-amount="1500"
+                data-name="Barkipedia"
+                data-description="Premium Account Upgrade"
+                data-image="https://stripe.com/img/documentation/checkout/marketplace.png"
+                data-locale="auto"
+                data-email="<%= currentUser.email %>">
+              </script>
+              <script>
+                  // Hide default stripe button
+                  document.getElementsByClassName("stripe-button-el")[0].style.display = 'none';
+              </script>
+              <button type="submit" class="btn btn-lg btn-primary">Pay with Card</button>
+            </form>
+        </div>
     </main>
 
     <% include ../static/partials/baseScripts.ejs %>

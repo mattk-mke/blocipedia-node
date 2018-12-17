@@ -9,14 +9,17 @@
     <main class="container">
       <% include ../static/partials/messages.ejs %>
       <div style="display: flex; align-items:center;">
-        <h1><%= wiki.title %> <small class="text-muted"><%= wiki.private ? "(Private)" : "(Public)" %></small></h1>
+        <h1><%= wiki.title %> </h1><h5 class="ml-2"><%- wiki.private ? '<span class="badge badge-pill badge-primary">Private</span>' : '<span class="badge badge-pill badge-info">Public</span>' %></h5>
       </div>
+      <h6><small class="text-muted">Created by: </small><%= author %></h6>
       <% if (currentUser) { %>
         <a href="/wikis/<%= wiki.id %>/edit" class="btn btn-warning">Edit</a>
         <form style="display:initial" action="/wikis/<%= wiki.id %>/destroy" method="post">
           <button type="submit" class="btn btn-danger">Delete</button>
         </form>
       <% } %>
+      <small class="text-muted">Updated: <%= wiki.updatedAt.toLocaleString() %></small>
+
       <div class="col-auto border p-2 mt-2"><%- htmlView %></div>
     </main>
 

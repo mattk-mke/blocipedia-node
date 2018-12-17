@@ -53,8 +53,8 @@ module.exports = (sequelize, DataTypes) => {
       }
       const msg = {
         to: user.email,
-        from: "noreply@blocipedia.org",
-        subject: "Welcome to Blocipedia!",
+        from: "noreply@example.com",
+        subject: "Welcome to Barkipedia!",
         text: `Hello, ${user.name}.\n\nThanks for signing up!`
       };
       return sgMail.send(msg);

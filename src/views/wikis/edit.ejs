@@ -31,7 +31,7 @@
           <% if (wiki.private) { %>
             <div class="col-lg-3">
               <p>Collaborators:</p>
-              <div class="form-group collaborators">
+              <div class="form-group border p-2 collaborators">
                 <% users.sort( (a, b) => {
                   let nameA = a.name.toUpperCase();
                   let nameB = b.name.toUpperCase();
@@ -48,6 +48,9 @@
                       <% collaborators.forEach( collaborator => {
                         if (collaborator.id == user.id) { %>
                           checked
+                        <% }
+                        if (user.id == currentUser.id) { %>
+                          disabled
                         <% }
                       }) %> >
                     <label class="custom-control-label" for="check-<%= user.id %>"><%= user.name %></label>
@@ -69,6 +72,7 @@
             </div>
           </div>
         <button type="submit" class="btn btn-primary">Update</button>
+        <a href="/wikis/<%= wiki.id %>"><button class="btn btn-outline-primary">Cancel</button></a>
       </form>
     </main>
 

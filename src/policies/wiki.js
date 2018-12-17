@@ -10,9 +10,6 @@ module.exports = class WikiPolicy extends ApplicationPolicy {
   }
 
   show() {
-    if (!this.user) {
-      return false;
-    }
     if (this.record.private == true) {
       return this.record.isCollaborator(this.user.id) || this._isOwner() || this._isAdmin();
     } else {

@@ -48,14 +48,17 @@ module.exports = {
       if ( err || wiki == null) {
         res.redirect(404, "/");
       } else {
-        const authorized = new Authorizer(req.user, wiki).show();
-        if (authorized) {
-          let htmlView = markdown.toHTML(wiki.body);
-          res.render("wikis/show", {wiki, htmlView});
-        } else {
-          req.flash("notice", "You are not authorized to do that.");
-          res.redirect(`/wikis/`);
-        }
+        userQueries.getUser(wiki.userId, (err, author) => {
+          const authorized = new Authorizer(req.user, wiki).show();
+          if (authorized) {
+            let htmlView = markdown.toHTML(wiki.body);
+            res.render("wikis/show", {wiki, author: author.name, htmlView});
+          } else {
+            console.log("error!")
+            req.flash("notice", "You are not authorized to do that.");
+            res.redirect(`/wikis/`);
+          }
+        })
       }
     });
   },

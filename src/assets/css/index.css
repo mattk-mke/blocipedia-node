@@ -1,0 +1,14 @@
+.jumbotron{
+  background: linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)), url("/img/jamie-street-804226-unsplash.jpg") no-repeat center center; 
+  -webkit-background-size: cover;
+  background-size: cover;
+}
+
+.splash-text {
+  color: white;
+  opacity: .95;
+}
+
+a:hover {
+  text-decoration: none;
+}

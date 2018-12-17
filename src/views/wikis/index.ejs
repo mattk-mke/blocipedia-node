@@ -26,10 +26,13 @@
             return 0;
           }).forEach( wiki => { %>
             <li class="list-group-item">
+
               <a href="/wikis/<%= wiki.id %>"> <%= wiki.title %> </a>
+              <small class="text-muted" style="float: right">Updated: <%= wiki.updatedAt.toLocaleString() %></small>
             </li>
           <% }) %>
         </ul>
+        <hr>
       <% } %>
       <h4>Public:</h4>
       <ul class="list-group">
@@ -46,6 +49,7 @@
         }).forEach( wiki => { %>
           <li class="list-group-item">
             <a href="/wikis/<%= wiki.id %>"> <%= wiki.title %> </a>
+            <small class="text-muted" style="float: right">Updated: <%= wiki.updatedAt.toLocaleString() %></small>
           </li>
         <% }) %>
       </ul>
