@@ -2,11 +2,12 @@
 <html>
   <head>
     <% include ../static/partials/head.ejs %>
+    <link rel="stylesheet" href="/css/wikis.css">
   </head>
   <body>
     <% include ../static/partials/navbar.ejs %>
 
-    <main class="container">
+    <main class="container pt-4">
       <% include ../static/partials/messages.ejs %>
       <h1>New Wiki</h1>
       <form action="/wikis/create" method="post">
@@ -45,5 +46,6 @@
 
     <% include ../static/partials/baseScripts.ejs %>
     <script src="/js/markdown_bundle.js"></script>
+    <% include ../static/partials/foot.ejs %>
   </body>
 </html>

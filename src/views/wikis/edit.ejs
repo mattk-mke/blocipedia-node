@@ -2,11 +2,12 @@
 <html>
   <head>
     <% include ../static/partials/head.ejs %>
+    <link rel="stylesheet" href="/css/wikis.css">
   </head>
   <body>
     <% include ../static/partials/navbar.ejs %>
 
-    <main class="container">
+    <main class="container pt-4">
       <% include ../static/partials/messages.ejs %>
       <h1>Edit Wiki</h1>
 
@@ -45,12 +46,12 @@
                 }).forEach( user => { %>
                   <div class="custom-control custom-checkbox">
                     <input type="checkbox" class="custom-control-input" id="check-<%= user.id %>" value="<%= user.id %>" name="collaborators"
-                      <% collaborators.forEach( collaborator => {
+                    <% if (user.id == currentUser.id) { %>
+                      checked
+                    <% }
+                      collaborators.forEach( collaborator => {
                         if (collaborator.id == user.id) { %>
                           checked
-                        <% }
-                        if (user.id == currentUser.id) { %>
-                          checked disabled
                         <% }
                       }) %> >
                     <label class="custom-control-label" for="check-<%= user.id %>"><%= user.name %></label>
@@ -78,5 +79,7 @@
 
     <% include ../static/partials/baseScripts.ejs %>
     <script src="/js/markdown_bundle.js"></script>
+    <% include ../static/partials/foot.ejs %>
+
   </body>
 </html>

@@ -6,19 +6,35 @@
   </head>
   <body>
     <% include ./partials/navbar.ejs %>
+    <header class="jumbotron mb-4">
+
+        <div class="splash-text col-lg-6">
+          <h1 class="display-3">Welcome to Barkipedia</h1>
+          <p class="lead">Create, share, and collaborate with canine wiki pages</p>
+        </div>
+        <% if (currentUser) { %>
+          <div class="col-lg-1 pt-2">
+            <a href="/wikis"><button type="button" class="btn btn-lg btn-primary">Explore!</button></a>
+          </div>
+        <% } %>
+    </header>
       <main class="container">
         <% include ../static/partials/messages.ejs %> 
         
-        <header class="jumbotron my-4">
-          <div class="splash-text">
-            <h1 class="display-3">Welcome to Barkipedia</h1>
-            <p class="lead">Create, share, and collaborate with canine wiki pages</p>
-            <% if (currentUser) { %>
-              <a href="/wikis"><button type="button" class="btn btn-lg btn-primary">Explore!</button></a>
-            <% } %>
-          </div>
-        </header>
-
+        <div class="features row my-4 text-center">
+            <div class="col-lg-4 mx-auto">
+              <h1 class="pb-4">Share knowledge</h1>
+              <p>The world can be a scary place for our four-legged friends. Learn the best techniques and tips from others passionate about dogs!</p>
+            </div>
+            <div class="col-lg-4 mx-auto">
+              <h1 class="pb-4">Markdown Editing</h1>
+              <p>Add rich formatting to wikis with full Markdown support, including images!</p>
+            </div>
+            <div class="col-lg-4 mx-auto">
+              <h1 class="pb-4">Private Wikis</h1>
+              <p>Have a project with sensitive info? Create wikis with restricted user access.</p>
+            </div>
+        </div>
         <div class="card-deck mb-3 text-center">
             <% if (!currentUser) { %>
             <div class="card mb-4 shadow-sm">
@@ -55,8 +71,9 @@
             </div>
             <% } %>
           </div>
-
+          
       </main>
+      <% include ./partials/foot.ejs %>
       <% include ./partials/baseScripts.ejs %>
     </body>
 </html>

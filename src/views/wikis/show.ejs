@@ -2,11 +2,12 @@
 <html>
   <head>
     <% include ../static/partials/head.ejs %>
+    <link rel="stylesheet" href="/css/wikis.css">
   </head>
   <body>
     <% include ../static/partials/navbar.ejs %>
 
-    <main class="container">
+    <main class="container mt-4">
       <% include ../static/partials/messages.ejs %>
       <div style="display: flex; align-items:center;">
         <h1><%= wiki.title %> </h1><h5 class="ml-2"><%- wiki.private ? '<span class="badge badge-pill badge-primary">Private</span>' : '<span class="badge badge-pill badge-info">Public</span>' %></h5>
@@ -24,6 +25,6 @@
     </main>
 
     <% include ../static/partials/baseScripts.ejs %>
-
+    <% include ../static/partials/foot.ejs %>
   </body>
 </html>

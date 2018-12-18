@@ -2,12 +2,14 @@
 <html>
   <head>
     <% include ../static/partials/head.ejs %>
+    <link rel="stylesheet" href="/css/downgrade.css">
+
   </head>
   <body>
 
     <% include ../static/partials/navbar.ejs %>
 
-    <main class="container">
+    <main class="container downgrade">
 
       <% include ../static/partials/messages.ejs %>
 
@@ -27,7 +29,7 @@
         </div>
       </form>
     </main>
-
+    <% include ../static/partials/foot.ejs %>   
     <% include ../static/partials/baseScripts.ejs %>
 
   </body>

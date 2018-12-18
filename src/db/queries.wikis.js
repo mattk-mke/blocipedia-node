@@ -1,5 +1,4 @@
 const Wiki = require("./models").Wiki;
-const User = require("./models").User;
 const Authorizer = require("../policies/wiki");
 
 module.exports = {
@@ -29,7 +28,6 @@ module.exports = {
             if (privateWikis.length == 0) {
               callback(null, wikis, null);
             } else {
-              console.log(privateWikis)
               callback(null, wikis, privateWikis);
             }
           })
@@ -107,7 +105,7 @@ module.exports = {
           fields: Object.keys(updatedWiki)
         })
         .then( () => {
-          wiki.setCollaborators(req.body.collaborators ? req.body.collaborators : null)
+          wiki.setCollaborators(req.body.collaborators ? req.body.collaborators : (wiki.private ? req.user.id : null))
           .then( () => {
             callback(null, wiki);
           })
