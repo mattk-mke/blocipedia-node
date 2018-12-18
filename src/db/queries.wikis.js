@@ -29,6 +29,7 @@ module.exports = {
             if (privateWikis.length == 0) {
               callback(null, wikis, null);
             } else {
+              console.log(privateWikis)
               callback(null, wikis, privateWikis);
             }
           })
@@ -47,7 +48,7 @@ module.exports = {
   addWiki(newWiki, callback) {
     return Wiki.create(newWiki)
     .then( wiki => {
-      wiki.setCollaborators([wiki.userId])
+      wiki.setCollaborators(wiki.private ? [wiki.userId] : null)
       .then( collaborators => {
         callback(null, wiki);
       })
